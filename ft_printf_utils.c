@@ -6,9 +6,11 @@
 /*   By: abenameu <abenameu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 17:19:07 by abenameu          #+#    #+#             */
-/*   Updated: 2026/11/09 10:48:34 by abenameu         ###   ########.fr       */
+/*   Updated: 2026/11/09 13:01:09 by abenameu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "printf.h"
 
 int	ft_strlen(const char *s)
 {
@@ -31,19 +33,24 @@ int ft_putstr(char *s)
 
 int	ft_putnbr_base(unsigned long n, char *base)
 {
-	int len;
-	int	base_len;
+	int 			len;
+	unsigned long	base_len;
 
 	len = 0;
 	base_len = ft_strlen(base);
 	if (n >= base_len)
-		len = ft_putnbr_hexa(n / base_len, base);
+		len = ft_putnbr_base(n / base_len, base);
 	write(1, &base[n % base_len], 1);
 	return (len + 1);
 }
 
 int ft_putnbr_int(int n)
 {
+	if (n == -2147483648)
+	{
+		write(1, "-2147483648", 11);
+		return (11);
+	}
 	if (n < 0)
 	{
 		write(1, "-", 1);

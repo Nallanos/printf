@@ -6,11 +6,46 @@
 /*   By: abenameu <abenameu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 17:08:10 by abenameu          #+#    #+#             */
-/*   Updated: 2026/11/09 11:14:36 by abenameu         ###   ########.fr       */
+/*   Updated: 2026/11/09 13:00:10 by abenameu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "printf.h"
+
+int	dispatcher(const char *s, va_list *ap)
+{
+	char	c;
+
+	if (*s == 'c')
+	{
+		c = va_arg(*ap, int);
+		write(1, &c, 1);
+		return (1);
+	}
+	if (*s == 's')
+	{
+		if (s)
+			return (ft_putstr(va_arg(*ap, char *)));
+		return (0);
+	}
+		
+	if (*s == 'd' || *s == 'i')
+		return (ft_putnbr_int(va_arg(*ap, int)));
+	if (*s == 'u')
+		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789"));
+	if (*s == 'x')
+		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789abcdef"));
+	if (*s == 'X')
+		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789ABCDEF"));
+	if (*s == 'p')	
+	{
+		write(1, "0x", 2);
+		return (2 + ft_putnbr_base(va_arg(*ap, unsigned long), "0123456789abcdef"));
+	}
+	if (*s == '%')
+		write(1, "%", 1);
+	return (1);
+}
 
 int ft_printf(const char *s, ...)
 {
@@ -39,33 +74,3 @@ int ft_printf(const char *s, ...)
 	va_end(ap);
 	return (len);
 }
-int	dispatcher(const char *s, va_list *ap)
-{
-	char	c;
-
-	if (*s == 'c')
-	{
-		c = va_arg(*ap, int);
-		write(1, &c, 1);
-		return (1);
-	}
-	if (*s == 's')
-		return (ft_putstr(va_arg(*ap, char *)));
-	if (*s == 'd' || *s == 'i')
-		return (ft_putnbr_int(va_arg(*ap, int)));
-	if (*s == 'u')
-		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789"));
-	if (*s == 'x')
-		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789abcdef"));
-	if (*s == 'X')
-		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789ABCDEF"));
-	if (*s == 'p')	
-	{
-		write(1, "0x", 2);
-		return (2 + ft_putnbr_base(va_arg(*ap, unsigned long), "0123456789abcdef"));
-	}
-	if (*s == '%')
-		write(1, "%", 1);
-	return (1);
-}
-
