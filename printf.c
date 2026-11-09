@@ -6,7 +6,7 @@
 /*   By: abenameu <abenameu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 17:08:10 by abenameu          #+#    #+#             */
-/*   Updated: 2026/11/09 13:05:05 by abenameu         ###   ########.fr       */
+/*   Updated: 2026/11/09 13:14:54 by abenameu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 int	dispatcher(const char *s, va_list *ap)
 {
-	char	c;
+	char			c;
+	unsigned long	p;
 
 	if (*s == 'c')
 	{
@@ -36,13 +37,14 @@ int	dispatcher(const char *s, va_list *ap)
 		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789ABCDEF"));
 	if (*s == 'p')	
 	{
-		if (!va_arg(*ap, unsigned long))
+		p = va_arg(*ap, unsigned long);
+		if (!p)
 		{
 			write(1, "(nil)", 5);
 			return (5);
 		}
 		write(1, "0x", 2);
-		return (2 + ft_putnbr_base(va_arg(*ap, unsigned long), "0123456789abcdef"));
+		return (2 + ft_putnbr_base(p, "0123456789abcdef"));
 	}
 	if (*s == '%')
 		write(1, "%", 1);
