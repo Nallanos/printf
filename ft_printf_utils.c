@@ -6,7 +6,7 @@
 /*   By: abenameu <abenameu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/11/08 17:19:07 by abenameu          #+#    #+#             */
-/*   Updated: 2026/11/09 13:01:09 by abenameu         ###   ########.fr       */
+/*   Updated: 2026/11/09 13:04:33 by abenameu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ int ft_putstr(char *s)
 {
 	int	len;
 
+	if (!s)
+	{
+		write(1, "(null)", 6);
+		return (6);
+	}
 	len = ft_strlen(s);
 	write(1, s, ft_strlen(s));
 	return (len);
