@@ -49,8 +49,11 @@ int	dispatcher(const char *s, va_list *ap)
 	if (*s == 'p')
 		return (ft_putptr(va_arg(*ap, unsigned long)));
 	if (*s == '%')
+	{
 		write(1, "%", 1);
-	return (1);
+		return (1);
+	}
+	return (0);
 }
 
 int	ft_printf(const char *s, ...)
