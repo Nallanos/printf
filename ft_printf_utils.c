@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
 
 int	ft_strlen(const char *s)
 {
@@ -22,7 +22,7 @@ int	ft_strlen(const char *s)
 	return (i);
 }
 
-int ft_putstr(char *s)
+int	ft_putstr(char *s)
 {
 	int	len;
 
@@ -38,7 +38,7 @@ int ft_putstr(char *s)
 
 int	ft_putnbr_base(unsigned long n, char *base)
 {
-	int 			len;
+	int				len;
 	unsigned long	base_len;
 
 	len = 0;
@@ -49,7 +49,7 @@ int	ft_putnbr_base(unsigned long n, char *base)
 	return (len + 1);
 }
 
-int ft_putnbr_int(int n)
+int	ft_putnbr_int(int n)
 {
 	if (n == -2147483648)
 	{

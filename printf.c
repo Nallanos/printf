@@ -10,23 +10,34 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "printf.h"
+#include "ft_printf.h"
+
+int	ft_putchar(int c)
+{
+	char	ch;
+
+	ch = c;
+	write(1, &ch, 1);
+	return (1);
+}
+
+int	ft_putptr(unsigned long p)
+{
+	if (!p)
+	{
+		write(1, "(nil)", 5);
+		return (5);
+	}
+	write(1, "0x", 2);
+	return (2 + ft_putnbr_base(p, "0123456789abcdef"));
+}
 
 int	dispatcher(const char *s, va_list *ap)
 {
-	char			c;
-	unsigned long	p;
-
 	if (*s == 'c')
-	{
-		c = va_arg(*ap, int);
-		write(1, &c, 1);
-		return (1);
-	}
+		return (ft_putchar(va_arg(*ap, int)));
 	if (*s == 's')
-	{
 		return (ft_putstr(va_arg(*ap, char *)));
-	}
 	if (*s == 'd' || *s == 'i')
 		return (ft_putnbr_int(va_arg(*ap, int)));
 	if (*s == 'u')
@@ -35,23 +46,14 @@ int	dispatcher(const char *s, va_list *ap)
 		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789abcdef"));
 	if (*s == 'X')
 		return (ft_putnbr_base(va_arg(*ap, unsigned int), "0123456789ABCDEF"));
-	if (*s == 'p')	
-	{
-		p = va_arg(*ap, unsigned long);
-		if (!p)
-		{
-			write(1, "(nil)", 5);
-			return (5);
-		}
-		write(1, "0x", 2);
-		return (2 + ft_putnbr_base(p, "0123456789abcdef"));
-	}
+	if (*s == 'p')
+		return (ft_putptr(va_arg(*ap, unsigned long)));
 	if (*s == '%')
 		write(1, "%", 1);
 	return (1);
 }
 
-int ft_printf(const char *s, ...)
+int	ft_printf(const char *s, ...)
 {
 	int		i;
 	va_list	ap;
